@@ -1,0 +1,164 @@
+index,orthography,IPA,gloss,language_variety
+1,ca,ca33,log,White Hmong
+2,cab,ca45,haul or tow,White Hmong
+3,cag,ca53,"root, origin, what (ua le caag how)",White Hmong
+4,caj,ca53,ridge,White Hmong
+5,cam,ca21,"to stick, glue; to argue, debate",White Hmong
+6,cas,ca22,"why, how",White Hmong
+7,cav,ca24,"argue, disagree, praise (can also be a tree that has fallen)",White Hmong
+8,cig,ci53,light up,White Hmong
+9,cim,ci21,"mark, sign, symbol",White Hmong
+10,cug,cu53,collect,White Hmong
+11,kab,ka45,insect,White Hmong
+12,kaj,ka53,"dawn, bright",White Hmong
+13,kam,ka21,"allow, permit",White Hmong
+14,kas,ka22,maggots,White Hmong
+15,kav,ka24,"stem, stalk",White Hmong
+16,kim,ki21,expensive; boy’s name,White Hmong
+17,kis,ki22,to infect,White Hmong
+18,kos,ko22,stem,White Hmong
+19,kug,ku53,very poor,White Hmong
+20,kum,ku21,boy’s name,White Hmong
+21,paj,pa53,flower,White Hmong
+22,pam,pa21,"bridge, blanket",White Hmong
+23,pam,pa21,blanket,White Hmong
+24,pas,pa22,"pond, lake, staff",White Hmong
+25,pas,pa22,stick,White Hmong
+26,pim,pi21,vagina,White Hmong
+27,po,po33,pancreas,White Hmong
+28,pob,po45,lump,White Hmong
+29,pog,po53,grandmother,White Hmong
+30,poj,po53,female,White Hmong
+31,pom,po21,see,White Hmong
+32,pos,po22,Thorn/cover,White Hmong
+33,pov,po24,throw,White Hmong
+34,pum,pu21,to see,White Hmong
+35,pus,pu22,escape with all or part of the trap/arrow still attached,White Hmong
+36,qag,qa53,"axle, swivel",White Hmong
+37,qas,qa22,"disgust, sicken",White Hmong
+38,rau,ʈau33 / ʈʌu33,six,White Hmong
+39,raug,ʈau53 / ʈʌu53,to suffer (something),White Hmong
+40,rauj,ʈau53 / ʈʌu53,hammer,White Hmong
+41,raum,ʈau21 / ʈʌu21,kidney,White Hmong
+42,raus,ʈau22 / ʈʌu22,to be full (of food),White Hmong
+43,rauv,ʈau24 / ʈʌu24,to light a fire,White Hmong
+44,rheeb,ʈhẽ45 / ʈhẽŋ45,to scratch the ground,White Hmong
+45,tag,ta53,done,White Hmong
+46,tam,ta21,"represent, sharpen (knife)",White Hmong
+47,tas,ta22,"finished/end, done",White Hmong
+48,tau,tau33 / tʌu33,to be able,White Hmong
+49,taub,tau45 / tʌu45,pumpkin,White Hmong
+50,taug,tau53 / tʌu53,to follow,White Hmong
+51,tauj,tau53 / tʌu53,species of grass,White Hmong
+52,taum,tau21  /tʌu21,bean,White Hmong
+53,tauv,tau24 / tʌu24,to dam up (water),White Hmong
+54,tawg,taɨ53 / taɯ53,explode,White Hmong
+55,tawm,taɨ21 / taɯ21,to go out,White Hmong
+56,taws,taɨ22 / taɯ22,to emit light,White Hmong
+57,tig,ti53,"turn, squirm, steer",White Hmong
+58,tim,ti21,because of it,White Hmong
+59,tis,ti22,"wing, level, layer, to sew",White Hmong
+60,to,to33,puncture,White Hmong
+61,tob,to45,very deep,White Hmong
+62,tod,to214,over there,White Hmong
+63,tog,to53,chair,White Hmong
+64,toj (nyob saum toj),to53,ahead,White Hmong
+65,tom,to21,to bite,White Hmong
+66,tos,to22,to wait,White Hmong
+67,tov,to24,to mix,White Hmong
+68,tsuag tsuag,ʈʂuɔ53 ʈʂuɔ53 / tʃuɔ53 tʃuɔ53,hurry,White Hmong
+69,tug,tu53,"whose, properly",White Hmong
+70,tum,tu21,to stack,White Hmong
+71,tus,tu22,"open-minded, stable, peaceful",White Hmong
+72,vus,vu22,'post-verbal intensifier',White Hmong
+73,zag,ʐa53 / ʒa53,a sentence,White Hmong
+74,zam,ʐa21 / ʒa21,"avoid, to step out of the way",White Hmong
+75,zas,ʐa22 / ʒa22,"color, paint",White Hmong
+1,tauv dlej(water),tau24 dle53 / tʌu24 dle53,to dam up (water),Green Hmong
+2,rau,ʈau33 / ʈʌu33,six,Green Hmong
+3,raub,ʈau45 / ʈʌu45,to scratch the ground,Green Hmong
+4,paag,pã53 / pãŋ53,"lake, pond",Green Hmong
+5,kaab,kã45 / kãŋ45,insect,Green Hmong
+6,cum,cu21,--,Green Hmong
+7,Kum,ku21,a boy’s name,Green Hmong
+8,tus,tu22,"to bind, fold",Green Hmong
+9,kis,ki22,corner; to contaminate,Green Hmong
+10,choj,cho53,blanket,Green Hmong
+11,vus,vu22,alternate name for Vaaj,Green Hmong
+12,tug,tu53,plain; flat place; classifier for inanimates and long objects; to float,Green Hmong
+13,pig,pi53,tomorrow (pig kig = peg kig),Green Hmong
+14,qag,qa53,have space left; to shine (of moon); belching,Green Hmong
+15,cug (cug haus qas),cu53,treadmill; to collect in a vessel,Green Hmong
+16,raum,ʈau21 / ʈʌu21,kidney,Green Hmong
+17,rauj,ʈau53 / ʈʌu53,hammer,Green Hmong
+18,pus,pu22,to go together; to close up an opening; to bake,Green Hmong
+19,tig,ti53,to turn; to move,Green Hmong
+20,caaj,cã53 / cãŋ53,ridge,Green Hmong
+21,taub,tau45 / tʌu45,pumpkin,Green Hmong
+22,pum,pu21,see,Green Hmong
+23,tog,to53,to wait,Green Hmong
+24,pis,pi22,how much (pis tsawg = pes tsawg),Green Hmong
+25,qam,qa21,dirty,Green Hmong
+26,cus npua,cu22 mbuɔ33,A piece of good looking meat along the spine of the animal,Green Hmong
+27,kaam,kã21 / kãŋ21,"allow, permit",Green Hmong
+28,toj (nyob sau toj),to53,ahead,Green Hmong
+29,paaj,pã53 / pãŋ53,flower,Green Hmong
+30,zaas,ʐã22 / ʒãŋ22,to dye; to face off,Green Hmong
+31,Kus,Ku22,a stem from leaf,Green Hmong
+32,tam,ta21,to invite to a meal; generation; first (son) (< Chinese),Green Hmong
+33,kug,ku53,very poor,Green Hmong
+34,caa,cã33 / cãŋ33,log,Green Hmong
+35,tsooj tog,ʈʂã53/ ʈʂãŋ53 / tʃã53/ tʃãŋ53,chair,Green Hmong
+36,qas,qa22,"dirty, ugly, bad",Green Hmong
+37,kaav,kã24 / kãŋ24,"stem, stalk",Green Hmong
+38,rauv,ʈau24 / ʈʌu24,to light a fire,Green Hmong
+39,caag,cã53 / cãŋ53,"root, origin, what (ua le caag how)",Green Hmong
+40,cim,ci21,"to remember, remind, remark; mark, sign; season",Green Hmong
+41,caav,cã24 / cãŋ24,"argue, disagree, praise, log",Green Hmong
+42,cos,co22,lump,Green Hmong
+43,pug,pu53,to fall (of dew),Green Hmong
+44,tawg (firewood),taɨ53 / taɯ53,explode,Green Hmong
+45,raus (finger nail),ʈau22 / ʈʌu22,to be full (of food),Green Hmong
+46,taug,tau53 / tʌu53,to follow,Green Hmong
+47,tod,to214,over there,Green Hmong
+48,kim,ki21,expensive,Green Hmong
+49,cis,ci22,--,Green Hmong
+50,cig,ci53,"to burn, to set fire to",Green Hmong
+51,tau,tau33 / tʌu33,to be able,Green Hmong
+52,paas,pã22 / pãŋ22,stick,Green Hmong
+53,tawm,taɨ21 / taɯ21,to go out,Green Hmong
+54,taum,tau21 / tʌu21,bean,Green Hmong
+55,tis,ti22,wing (=tim); to name; to sew,Green Hmong
+56,caag,cã53 / cãŋ53,venereal disease (mob caas),Green Hmong
+57,vug,vu53,spear,Green Hmong
+58,po,po33,pancreas,Green Hmong
+59,kaas,kã22 / kãŋ22,maggots,Green Hmong
+60,zaam,ʐa21 / ʒa21,"to avoid, give way for, forgive; dress up; color; in order, orderly",Green Hmong
+61,tas,ta22,"to say, subordinator “that”; birthmark",Green Hmong
+62,tim,ti21,"over there; because of, depend on",Green Hmong
+63,puj,pu53,grandmother,Green Hmong
+64,paam,pã21 / pãŋ21,to prepare,Green Hmong
+65,kag kag,ka53 ka53,hurry,Green Hmong
+66,pov,po24,throw,Green Hmong
+67,to,to33,puncture,Green Hmong
+68,caam,cã21 / cãŋ21,"to stick, glue; to argue, debate",Green Hmong
+69,paas,pã22 / pãŋ22,stick; a swallow (of liquid),Green Hmong
+70,puj (grandmother on father side / lady chicken),pu53,female,Green Hmong
+71,cus,cu22,(shake),Green Hmong
+72,raug,ʈau53 / ʈʌu53,to suffer (something),Green Hmong
+73,caab,cã45 / cãŋ45,haul or tow,Green Hmong
+74,tauj,tau53 / tʌu53,species of grass,Green Hmong
+75,zaag,ʐã53 / ʒãŋ53,a given name,Green Hmong
+76,tov,to24,to mix,Green Hmong
+77,tum,tu21,"to bit, to fight; to stack",Green Hmong
+78,tum,tu21,to bite,Green Hmong
+79,taws,taɨ22 / taɯ22,to emit light,Green Hmong
+80,puj cus,pu53 cu22,earring,Green Hmong
+81,tub,tu45,very deep,Green Hmong
+82,tag,ta53,"true, real, certain; to hold",Green Hmong
+83,vum,vu21,"to steam, to warm",Green Hmong
+84,kig (the word alone does not exist - most have a prefix),ki53,morning (taag kig),Green Hmong
+85,pum,pu21,to see,Green Hmong
+86,kaaj,kã53 / kãŋ53,"dawn, bright",Green Hmong
+87,pim,pi21,vagina,Green Hmong
+88,xuav paug / pus,suɔ24 pau53 / suɔ24 pʌu53 / suɔ24 pu22,thorn / cover,Green Hmong

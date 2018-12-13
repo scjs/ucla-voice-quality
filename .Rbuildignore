@@ -1,0 +1,5 @@
+^data-raw$
+^voicequality\.Rproj$
+^\.Rproj\.user$
+^README\.md$
+^TODO\.md$

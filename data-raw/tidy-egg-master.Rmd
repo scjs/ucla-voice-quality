@@ -1,0 +1,257 @@
+---
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, message = FALSE}
+library("openxlsx")
+library("tidyverse")
+```
+
+The EGG master spreadsheet can be downloaded from the
+[project website](http://www.phonetics.ucla.edu/voiceproject/voice.html).
+
+Rows 4756-5151 (4757-5152 with header) have misaligned data for some of the
+columns. The values in the column `peak_Vel_Time_means009` are duplicated such
+that they appear both under the correct header and under the next column header
+`min_Vel_mean`. For these rows only, the values in the column `min_Vel_means001`
+and all columns to its right need to be moved one column to the left.
+
+First, read in the spreadsheet with the affected rows omitted.
+
+```{r}
+egg <- read.xlsx("website/Spreadsheet/Voice_EGG.xlsx",
+  rows = c(1:4756, 5153:14807),
+  na.strings = c("", "NA", "nan", "new")
+)
+
+glimpse(egg)
+```
+
+Some of these cells have numbers formatted like `1.6E-2` which are read as type
+`character` by `read.xlsx()`. To fix these, lowercase them and then coerce them
+to type `double`.
+
+```{r}
+egg <- egg %>%
+  mutate_at(vars(CQ_mean:peak_Vel_Time_means009), tolower) %>%
+  mutate_at(vars(CQ_mean:peak_Vel_Time_means009), as.double)
+```
+
+Next, read in only the affected rows.
+
+```{r}
+misaligned <- read.xlsx("website/Spreadsheet/Voice_EGG.xlsx",
+  rows = c(4757:5152),
+  colNames = FALSE,
+  skipEmptyCols = FALSE
+)
+```
+
+Convert the affected rows to a list of columns, and use `duplicated()` to show
+the duplicated column (column 84), then remove it. Columns 13-18 also show as
+duplicated, but that's only because those are metadata that does not vary for
+this subset of the data.
+
+```{r}
+duplicated(as.list(misaligned))
+
+misaligned <- select(misaligned, -84)
+
+duplicated(as.list(misaligned))
+```
+
+Give the misaligned data the correct column names, and combine it with the rest
+of the table.
+
+```{r}
+colnames(misaligned) <- colnames(egg)
+
+egg <- bind_rows(egg, misaligned)
+```
+
+The tone number, aspiration, tone contour, and speaker number columns were read
+as type `double`. Coerce these columns to the correct types.
+
+```{r}
+egg <- mutate(egg,
+  No..Tone = as.integer(No..Tone),
+  Aspiration = as.logical(Aspiration),
+  Tone.Cont = as.character(Tone.Cont),
+  `Speaker.#` = as.character(`Speaker.#`)
+)
+```
+
+Discard the overall mean columns, which won't be used when the dataframe is in
+the tidyverse format.
+
+```{r}
+egg <- select(egg, -ends_with("mean"))
+```
+
+The EGG master spreadsheet has both a `Tone` and a `Tone.Cat` column. The
+`Tone.Cat` column is not documented in the readme, but it has codes for H(igh),
+M(edium), L(ow), and B(ig), which are the four categories that the readme says
+should be in the `Tone` column. The `Tone` column here has 11 different codes
+that don't map onto these tone categories, the contours, or the 
+language-specific conventions (`Tone.From.txtgrid`).
+
+```{r}
+count(egg,
+  Tone.Cat, Tone.Cont, Tone.From.txtgrid, Tone, Language, `Dialect/Village`) %>% 
+  print(n = 45)
+```
+
+For instance, an `H` code in `Tone.Cat` with a `53` in `Tone.Cont` has rows
+that are coded both as `high` and `low` in the `Tone` column. These are in
+different villages, though. Until this is clarified, rename this column to
+`tone_misc`.
+
+```{r}
+egg <- rename(egg, tone_misc = Tone)
+```
+
+Remove the `.mat` extension from the filenames.
+
+```{r}
+egg <- mutate(egg, Filename = str_remove(Filename, "\\.mat$"))
+```
+
+Rename and recode some columns with the descriptive names from the PDF readme.
+
+```{r}
+egg <- mutate(egg,
+  language_variety = recode(`Dialect/Village`,
+    Black = "Black Miao",
+    CH = "China",
+    TW = "Taiwan",
+    SJG = "San Juan Guelavia Zapotec",
+    SMZ = "Santiago Matatlan Zapotec",
+    v1 = "Village 1",
+    v2 = "Village 2",
+    W = "White Hmong"
+  ),
+  phonation = recode(Phonation,
+    M = "Modal",
+    C = "Creaky",
+    B = "Breathy",
+    L = "Lax",
+    `T` = "Tense"
+  ),
+  vowel_nasality = recode(`Oral/Nasal`,
+    O = "Oral",
+    N = "Nasal"
+  ),
+  tone_category = recode(Tone.Cat,
+    H = "High",
+    M = "Mid",
+    L = "Low",
+    B = "Big"
+  ),
+  segment_type = recode(CorV,
+    C = "Consonant",
+    V = "Vowel"
+  ),
+  consonant_aspiration = ifelse(Aspiration,
+    "Aspirated",
+    "Unaspirated"
+  )
+)
+
+egg <- select(egg,
+  -`Dialect/Village`,
+  -Phonation,
+  -`Oral/Nasal`,
+  -Tone.Cat,
+  -CorV,
+  -Aspiration
+)
+```
+
+Remove columns that don't provide any unique information.
+
+```{r}
+egg <- select(egg,
+  -Speaker, # composite of Sex + Speaker_Number columns
+  -Lphon,   # composite of Language + Phonation columns
+  -Tphon    # composite of Tone.Cat + Phonation columns
+)
+```
+
+Rename the columns in the tidyverse style.
+
+```{r}
+egg <- rename(egg,
+  textgrid_label = Label,
+  speaker_number = `Speaker.#`,
+  speaker_id = Lang_Spk,
+  speaker_sex = Sex,
+  tone_contour = Tone.Cont,
+  number_of_tone_targets = No..Tone,
+  language_specific_tone = Tone.From.txtgrid,
+  vowel_quality = Vowel
+)
+
+egg <- rename_all(egg, funs(str_replace(., "-", "_")))
+
+# lowercase, but avoid lowercasing the measurement columns, eg CQ
+egg <- rename_if(egg, funs(!is_double(.)), tolower) %>%
+  rename(segment_end = seg_End, segment_start = seg_Start, duration = Duration)
+```
+
+Reshape the dataframe. Columns ending in 001-009 are timepoints.
+
+```{r}
+egg <- egg %>%
+  gather(key, value, matches("00\\d$")) %>%
+  extract(key, c("measure", "timepoint"), "(.+?)_means00(\\d)") %>%
+  spread(measure, value) %>%
+  mutate(timepoint = as.integer(timepoint))
+```
+
+Rearrange the columns:
+
+1. Information about the speaker and their language
+2. Name of the audio file and the timestamps in the file where this segment
+comes from
+3. Information about the segment and preceding consonant, as applicable
+5. EGG measures
+
+```{r}
+egg <- select(egg,
+  speaker_id, speaker_number, speaker_sex, language, language_variety,
+  filename, segment_start, segment_end, duration, timepoint,
+  textgrid_label, segment_type, vowel_quality, phonation, vowel_nasality,
+  consonant_aspiration,
+  tone_contour, number_of_tone_targets, tone_category, language_specific_tone,
+  tone_misc,
+  CQ, CQ_H, CQ_HT, CQ_PM,
+  min_Vel, min_Vel_Time, peak_Vel, peak_Vel_Time,
+  SQ2_SQ1, SQ4_SQ3, ratio
+) %>%
+  arrange(filename, segment_start, timepoint)
+```
+
+In the reshaped table, individual measures with bad data at a particular
+timepoint are marked with a `0` placeholder instead of a measurement value.
+Change these to `NA`.
+
+```{r}
+egg <- mutate_at(egg, vars(CQ:ratio), funs(na_if(., 0)))
+```
+
+Save the data.
+
+```{r, results = 'hide'}
+usethis::use_data(egg)
+
+write_csv(egg, path = "csv/egg.csv")
+```

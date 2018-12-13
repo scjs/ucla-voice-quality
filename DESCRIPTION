@@ -1,0 +1,40 @@
+Package: voicequality
+Title: Production and Perception of Linguistic Voice Quality Project at UCLA
+Version: 1.0.0
+Authors@R: c(
+  person("Scott", "Seyfarth", email = "seyfarth.2@osu.edu", role = c("cre", "com")),
+  person("Abeer", "Alwan", role = "aut"),
+  person("Jason", "Bishop", role = "aut"),
+  person("Gang", "chen", role = "aut"),
+  person("Christina", "Esposito", role = "aut"),
+  person("Marc", "Garellek", role = "aut"),
+  person("Patricia", "Keating", role = "aut"),
+  person("Sameer ud Dowla", "Khan", role = "aut"),
+  person("Jiangping", "Kong", role = "aut"),
+  person("Jody", "Kreiman", role = "aut"),
+  person("Jianjing", "Kuang", role = "aut"),
+  person("Grace", "Kuo", role = "aut")
+  )
+Description: Acoustic and electroglottographic measurements derived from
+  recordings of Bo, English, Gujarati, Hmong, Luchun, Mandarin, Mazatec, Miao,
+  Yi, and Zapotec, as well as word lists for nine languages. The focus is on
+  different kinds of phonation (linguistic voice quality) and tone. The original
+  audio and EGG recordings, TextGrid annotations, PDF tables and notes, and Excel
+  spreadsheets are available at
+  http://www.phonetics.ucla.edu/voiceproject/voice.html and attribution should
+  be made as follows: Materials from the "Production and Perception of
+  Linguistic Voice Quality" project at UCLA.
+Imports:
+  tibble
+License: CC BY-NC-SA 3.0
+Encoding: UTF-8
+LazyData: true
+Suggests:
+  knitr,
+  openxlsx,
+  rmarkdown,
+  tidyverse
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+URL: https://github.com/scjs/ucla-voice-quality
+BugReports: https://github.com/scjs/ucla-voice-quality/issues

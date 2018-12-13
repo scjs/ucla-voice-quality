@@ -1,0 +1,279 @@
+---
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, message = FALSE}
+library("openxlsx")
+library("tidyverse")
+```
+
+First, read in the acoustics master spreadsheet downloaded from the
+[project website](http://www.phonetics.ucla.edu/voiceproject/voice.html).
+
+```{r}
+acoustics <- read.xlsx("website/Spreadsheet/Voice_Master.xlsx")
+
+glimpse(acoustics)
+```
+
+In row 6460 (6461 with header), the column names are repeated in place of the
+measurements for the `shrF0` columns, so these columns were all read as type
+`character`, and the values in this row are invalid. Coerce these columns to
+type `double`, which will change the extra column names in that row to `NA`.
+
+```{r}
+acoustics <- mutate_at(acoustics, vars(starts_with("shrF0")), as.double)
+```
+
+The tone number, aspiration, and tone contour columns were read as type
+`double`. Coerce these columns to the correct types.
+
+```{r}
+acoustics <- mutate(acoustics,
+  No.Tone = as.integer(No.Tone),
+  Aspiration = as.logical(Aspiration),
+  Tone.Cont = as.character(Tone.Cont)
+)
+```
+
+Discard the overall mean columns, which won't be used when the dataframe is in
+the tidyverse format.
+
+```{r}
+acoustics <- select(acoustics, -ends_with("mean"))
+```
+
+The column named `0=do.not.use` has a `0` to indicate bad data, but sometimes
+another annotation too:
+
+```{r}
+count(acoustics, `0=do.not.use`)
+```
+
+If this column indicates bad data for some or all of the acoustic measurements,
+change those acoustic measurements to `NA`.
+
+```{r}
+beg_acoustics_cols <- str_subset(names(acoustics), "means(00[1-3])$")
+mid_acoustics_cols <- str_subset(names(acoustics), "means(00[4-6])$")
+end_acoustics_cols <- str_subset(names(acoustics), "means(00[7-9])$")
+```
+
+```{r}
+acoustics[
+  !is.na(acoustics$`0=do.not.use`) & acoustics$`0=do.not.use` == "0",
+  c(beg_acoustics_cols, mid_acoustics_cols, end_acoustics_cols)
+] <- NA
+
+acoustics[
+  !is.na(acoustics$`0=do.not.use`) & acoustics$`0=do.not.use` == "0 beg",
+  beg_acoustics_cols
+] <- NA
+
+acoustics[
+  !is.na(acoustics$`0=do.not.use`) & acoustics$`0=do.not.use` == "0 mid",
+  mid_acoustics_cols
+] <- NA
+
+acoustics[
+  !is.na(acoustics$`0=do.not.use`) &
+    acoustics$`0=do.not.use` %in% c("0 end", "0 end ", "check end f0", "check f0 end"),
+  end_acoustics_cols
+] <- NA
+```
+
+There is also one duplicated filename, with different measurements for two
+entries:
+
+```{r}
+filter(acoustics, Filename == "speaker3M_aC32a.mat")
+```
+
+Based on the original audio and the timestamps in the original TextGrid, the
+second entry is incorrect, so remove it from the table.
+
+Also, remove the `0=do.not.use` column, now that the bad data that was indicated
+by this column has been converted to `NA` or removed.
+
+```{r}
+acoustics <- filter(acoustics,
+  Filename != "speaker3M_aC32a.mat" | seg_End < 140
+) %>%
+  select(-`0=do.not.use`)
+```
+
+Remove the `.mat` extension from the rest of the filenames.
+
+```{r}
+acoustics <- mutate(acoustics, Filename = str_remove(Filename, "\\.mat$"))
+```
+
+Rename and recode some columns with the descriptive names from the PDF readme.
+
+```{r}
+acoustics <- mutate(acoustics,
+  language_variety = recode(`Dialect/Village`,
+    Black = "Black Miao",
+    CH = "China",
+    TW = "Taiwan",
+    SJG = "San Juan Guelavia Zapotec",
+    SMZ = "Santiago Matatlan Zapotec",
+    v1 = "Village 1",
+    v2 = "Village 2",
+    W = "White Hmong"
+  ),
+  phonation = recode(Phonation,
+    M = "Modal",
+    C = "Creaky",
+    B = "Breathy",
+    L = "Lax",
+    `T` = "Tense"
+  ),
+  vowel_nasality = recode(`Oral/Nasal`,
+    O = "Oral",
+    N = "Nasal"
+  ),
+  tone_category = recode(Tone,
+    H = "High",
+    M = "Mid",
+    L = "Low",
+    B = "Big"
+  ),
+  segment_type = recode(CorV,
+    C = "Consonant",
+    V = "Vowel"
+  ),
+  consonant_aspiration = ifelse(Aspiration,
+    "Aspirated",
+    "Unaspirated"
+  ),
+  consonant_nasality = recode(Pre_C,
+    O = "Oral",
+    N = "Nasal"
+  )
+)
+
+acoustics <- select(acoustics,
+  -`Dialect/Village`,
+  -Phonation,
+  -`Oral/Nasal`,
+  -Tone,
+  -CorV,
+  -Aspiration,
+  -Pre_C
+)
+```
+
+Remove columns that don't provide any unique information.
+
+```{r}
+acoustics <- select(acoustics,
+  -Speaker, # composite of Sex + Speaker_Number columns
+  -Lphon,   # composite of Language + Phonation columns
+  -Tphon    # composite of Tone + Phonation columns
+)
+```
+
+Rename the columns in the tidyverse style.
+
+```{r}
+acoustics <- rename(acoustics,
+  textgrid_label = Label,
+  speaker_number = `Speaker.#`,
+  speaker_id = Lang_Spk,
+  speaker_sex = Sex,
+  tone_contour = Tone.Cont,
+  number_of_tone_targets = No.Tone,
+  language_specific_tone = Tone.From.txtgrid,
+  vowel_quality = Vowel
+)
+
+# lowercase, but avoid lowercasing the measurement columns, eg H1c
+acoustics <- rename_if(acoustics, funs(!is_double(.)), tolower) %>%
+  rename(segment_end = seg_End, segment_start = seg_Start, duration = Duration)
+```
+
+Reshape the dataframe. Columns ending in 001-009 are timepoints.
+
+```{r}
+acoustics <- acoustics %>%
+  gather(key, value, matches("00\\d$")) %>%
+  extract(key, c("measure", "timepoint"), "(.+?)_means00(\\d)") %>%
+  spread(measure, value) %>%
+  mutate(timepoint = as.integer(timepoint))
+```
+
+Rearrange the columns:
+
+1. Information about the speaker and their language
+2. Name of the audio file and the timestamps in the file where this segment
+comes from
+3. Information about the segment
+4. Information about the preceding consonant, if applicable
+5. Acoustic measures: pitch, formant filter, harmonic amplitudes, measures
+derived from the harmonic amplitudes, energy and noise measures
+
+```{r}
+acoustics <- select(acoustics,
+  speaker_id, speaker_number, speaker_sex, language, language_variety,
+  filename, segment_start, segment_end, duration, timepoint,
+  textgrid_label, segment_type, vowel_quality, phonation, vowel_nasality,
+  tone_contour, number_of_tone_targets, tone_category, language_specific_tone,
+  consonant_aspiration, consonant_nasality,
+  strF0, sF0, pF0, shrF0,
+  sF1, sB1, sF2, sB2, sF3, sB3, sF4, sB4, pF1, pF2, pF3, pF4,
+  H1u, H1c, H2u, H2c, H4u, H4c, A1u, A1c, A2u, A2c, A3u, A3c,
+  H1H2u, H1H2c, H2H4u, H2H4c, H1A1u, H1A1c, H1A2u, H1A2c, H1A3u, H1A3c,
+  Energy, HNR05, HNR15, HNR25, HNR35, CPP, SHR
+) %>%
+  arrange(filename, segment_start, timepoint)
+```
+
+In the reshaped table, individual measures with bad data at a particular
+timepoint are marked with a `0` placeholder instead of a measurement. Change
+these to `NA`.
+
+However, some measures can also have valid measurements that are exactly `0`.
+For example, `H1A1u` is the difference in amplitude between the first harmonic
+and the harmonic that is closest to the first formant. If these happen to be the
+same harmonic, then `H1A1u` (and `H1A1c`) will be exactly `0`, and similarly for
+the measures derived from `A2` and `A3`.
+
+To fix these measures, re-calculate all of the measures derived from `A1`, `A2`,
+and `A3` only for the cells that are now `NA`. All other `NA` values will
+propagate correctly.
+
+Also, `SHR` may have a true value of exactly `0` if there is zero estimated
+subharmonic energy. Because this is a very common situation, there is no way to
+determine if a `0` in this column is a true `0` measurement or if it indicates
+bad data. Instead of replacing `0` values in this column with `NA`, make a note
+in the documentation.
+
+```{r}
+acoustics <- mutate_at(acoustics, vars(strF0:CPP), funs(na_if(., 0))) %>%
+  mutate(
+    H1A1u = ifelse(is.na(H1A1u), H1u - A1u, H1A1u),
+    H1A1c = ifelse(is.na(H1A1c), H1c - A1c, H1A1c),
+    H1A2u = ifelse(is.na(H1A2u), H1u - A2u, H1A2u),
+    H1A2c = ifelse(is.na(H1A2c), H1c - A2c, H1A2c),
+    H1A3u = ifelse(is.na(H1A3u), H1u - A3u, H1A3u),
+    H1A3c = ifelse(is.na(H1A3c), H1c - A3c, H1A3c)
+  )
+```
+
+Save the data.
+
+```{r, results = 'hide'}
+usethis::use_data(acoustics)
+
+write_csv(acoustics, path = "csv/acoustics.csv")
+```

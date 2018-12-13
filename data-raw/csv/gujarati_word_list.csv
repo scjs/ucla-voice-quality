@@ -1,0 +1,76 @@
+file_number,target_pronunciation,dictionary_pronunciation,target_vowel,gloss
+01,kan,kan,a,ear
+02,kʰanɡi,kʰanɡi,ʰa,secret
+03,kan̤,kəhan,a̤,Krishna
+04,paɖʋũ,paɖʋũ,a,"to draw, to cause to fall"
+05,paɖ̤,pəhaɖ,a̤,mountain
+06,baɾ,baɾ,a,twelve
+07,bʱaɾ,bʱaɾ,ʱa,burden
+08,baɾ̤,bəhaɾ,a̤,outside
+09,baɳ,baɳ,a,arrow
+10,bʱan,bʱan,ʱa,consciousness
+11,ban̤ũ,bəhanũ,a̤,excuse
+12,malik,malik,a,"boss, god"
+13,maɾ̤aɟʒ,məhaɾaɟʒ,a̤,"priest, emperor"
+14,ɾab,ɾab,a,"gruel, baby food"
+15,ɾab̤əɾ,ɾahəbəɾ,a̤,guide
+16,cʃətu̪ɾai,cʃətu̪ɾai,ai,cleverness
+17,səɾʋəɡɾai̤ ̤,səɾʋəɡɾahi,ai̤ ̤,comprehensive
+18,cʃalaki,cʃalaki,a,"cleverness, trick"
+19,səlak̤aɾ,səlahəkaɾ,a̤,adviser
+20,ʋan,ʋan,a,complexion
+21,ʋan̤,ʋahən,a̤,vehicle
+22,ləʋaɾo,ləʋaɾo,a,"prattle, gossip"
+23,ʋjəʋaɾ̤ũ,ʋjəʋəharũ,a̤,feasible
+24,səməɡɾə,səməɡɾə,ə,"whole, entire"
+25,sətj̪aɡɾə̤,sətj̪aɡɾəhə,ə̤,insistence on truth
+26,səbʱasəd̪,səbʱasəd̪,ə,member
+27,səb̤ʱaɡi,səhəbʱaɡi,ə̤,partner
+28,də̪ɾəd̪,də̪ɾəd̪,ə,"disease, pain"
+29,səɾəd̤̪,səɾhəd̪,ə̤,"frontier, border"
+30,keʋũ,keʋũ,e,of what kind
+31,kɛʋ̤ũ,kəheʋũ,ɛ̤,to say
+32,de̪ʃi,de̪ʃi,e,"native, villager"
+33,dɛ̪ʃ̤ət ̪,də̪heʃət ̪,ɛ̤,apprehension
+34,pelũ,pelũ,e,that
+35,pɛl̤ũ,pəhelũ,ɛ̤,first
+36,benəmun,benəmun,e,unparalleled
+37,bɛn̤,bəhen,ɛ̤,sister
+38,beɾoɟʒɡaɾ,beɾoɟʒɡaɾ,e,unemployed
+39,bɛɾ̤aʃ,bəheɾaʃ,ɛ̤,deafness
+40,mɛ̃,mɛ̃,ɛ,I
+41,mɛm̤an,məheman,ɛ̤,guest
+42,mɛl,mɛl,ɛ,"dirt, filth"
+43,mɛl̤,məhel,ɛ̤,palace
+44,ʋeɾ,ʋeɾ,e,"revenge, enmity"
+45,ʋɛɾ̤,ʋəheɾ,ɛ̤,sawdust
+46,ʋeʋəi,ʋeʋəi,e,father-in-law of one’s child
+47,ʋɛʋ̤aɾ,ʋəheʋaɾ,ɛ̤,daily interaction
+48,ʃeɾɖi,ʃeɾɖi,e,sugarcane
+49,ʃɛɾ̤,ʃəheɾ,ɛ̤,city
+50,cʃinta̪,cʃinta̪,i,worry
+51,cʃin̤ə,cʃihnə,i ̤,"mark, trait"
+52,ʋiʋɾəɳ,ʋiʋɾəɳ,i,"criticism, commentary"
+53,ʋiʋ̤əɭ,ʋihʋəɭ,i ̤,puzzled and upset
+54,kɔɡɭo,kɔɡɭo,ɔ,"mouthful of liquid, gargle"
+55,kɔʋ̤ũ,kohəʋũ,ɔ̤,to rot
+56,ɖoɭo,ɖoɭo,o,eyeball
+57,ɖolʋũ,ɖolʋũ,o,to swing
+58,ɖʱoɭʋũ,ɖʱoɭʋũ,ʱo,to spill
+59,ɖɔɭ̤ũ,ɖəhoɭũ,ɔ̤,"dirty, polluted"
+60,ɖɔɭ̤ʋũ,ɖəhoɭʋũ,ɔ̤,to stir in
+61,do̪ɾo,do̪ɾo,o,"thread, necklace"
+62,dɔ̪ʋ̤ũ,do̪həʋũ,ɔ̤,to milk
+63,mokɭũ,mokɭũ,o,"spacious, open"
+64,mɔ̃,mɔ̃,ɔ,"mouth, face"
+65,mɔko,mɔko,ɔ,favorable opportunity
+66,mɔk̤,mohək,ɔ̤,charming
+67,locʃən,locʃən,o,eye
+68,lo̤cʃumbək,lohəcʃumbək,o̤,magnet
+69,sodo̪,sodo̪,o,trade
+70,sɔ,sɔ,ɔ,hundred
+71,sɔd̤ə̪ɾ,səhodə̪ɾ,ɔ̤,born of the same mother
+72,nəiʋed̪,nəiʋed̪,əi,food offered to god
+73,nəi̤ʋ̤ət ̪,nəhiʋət ̪,əi̤ ̤,slightly
+74,bəud̪ʱ ːik,bəud̪ʱ ːik,əu,intelligent
+75,bəṳ̤,bəhu,əṳ̤,"many, much"

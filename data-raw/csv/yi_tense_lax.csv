@@ -1,0 +1,83 @@
+vowel,tense_lax,minimal_pair_id,english_gloss,IPA
+u,lax,1,frighten,gu21
+u̠,tense,1,bent,gu̠21
+u,lax,2,chopstick,dzu21
+u̠,tense,2,waist,dzu̠21
+u,lax,3,muscle,dzu33
+u̠,tense,3,fear,dzu̠33
+u,lax,4,stick,du21
+u̠,tense,4,get fire,du̠21
+u,lax,5,hoe,kʰu21
+u̠,tense,5,year,kʰu̠21
+u,lax,6,sky,mu33
+u̠,tense,6,blow,mu̠33
+u,lax,7,orange,lu21
+u̠,tense,7,enough,lu̠21
+u,lax,8,soft,nu33
+u̠,tense,8,"fur, hair",nu̠33
+u,lax,9,silver,tʰu21
+u̠,tense,9,dull,tʰu̠21
+u,lax,10,hoe,tsʰu21
+u̠,tense,10,six,tsʰu̠21
+u,lax,11,praise,pu33
+u̠,tense,11,curl up,pu̠33
+ə,lax,12,count,ɣə21
+ə̠,tense,12,needle,ɣə̠21
+ə,lax,13,dew,tsə21
+ə̠,tense,13,wrinkled,tsə̠21
+ə,lax,14,kitchen,tə21
+ə̠,tense,14,hole,lu33 tə̠21
+ə,lax,15,herd,ɬə21
+ə̠,tense,15,dry in the sun,ɬə̠21
+ə,lax,16,quantifier for book,pə21
+ə̠,tense,16,dregs,pə̠21
+ə,lax,17,pillow,gə21
+ə̠,tense,17,foot,gə̠21
+ə,lax,18,mountain,bə21
+ə̠,tense,18,trotter,bə̠21
+ə,lax,19,toward,lə21
+ə̠,tense,19,drill,lə̠21
+ə,lax,20,sunset,də21
+ə̠,tense,20,wear (shoes),də̠21
+ə,lax,21,have,nə33
+ə̠,tense,21,cut with scissors,nə̠33
+ə,lax,22,dig,dzə33
+ə̠,tense,22,lie down,dzə̠33
+ie,lax,23,paper,jie33
+i̠e̠,tense,23,chicken,ji̠e̠33
+ie,lax,24,sister,ȶɕie21
+i̠e̠,tense,24,saw,ȶɕi̠e̠21
+ie,lax,25,iron,ɕie21
+i̠e̠,tense,25,breath,ɕi̠e̠21
+ie,lax,26,tile,pʰie21
+i̠e̠,tense,26,leaf,pʰi̠e̠21
+o,lax,27,brother,ko33
+o̠,tense,27,complain,ko̠33
+o,lax,28,tea leaf,lo21
+o̠,tense,28,tiger,lo̠21
+o,lax,29,get sick,no21
+o̠,tense,29,how much,no̠21
+o,lax,30,sound nice,ʂo21
+o̠,tense,30,seek,ʂo̠21
+i,lax,31,heavy,li33
+i̠,tense,31,street,li̠31
+i,lax,32,"slow, late",pʰi21
+i̠,tense,32,throw up,pʰi̠21
+i,lax,33,water,ʑi21
+i̠,tense,33,sleep,ʑi̠21
+i,lax,34,dog,ȶɕʰi33
+i̠,tense,34,wink,ȶɕʰi̠33
+ɯ,lax,35,stove,tɯ21/tə21
+ɯ̠,tense,35,thoughts,tɯ̠21/tə̠21
+ɯ,lax,36,nod,tɯ33/tu33
+ɯ̠,tense,36,quantifier (one of handful of) rice,tɯ̠33/tu̠33
+ɿ,lax,37,cough,tsɿ21
+ɿ̱,tense,37,astringent,tsɿ̱21
+ɿ,lax,38,weeds,sɿ33
+ɿ̱,tense,38,sweep,sɿ̱33
+ɿ,lax,39,seven/seed,sɿ21
+ɿ̱,tense,39,die,sɿ̱21
+ɿ,lax,40,the day before yesterday,sɿ33
+ɿ̱,tense,40,screw,sɿ̱33/sɿ̱21
+ɿ,lax,41,borrow,tsʰɿ33
+ɿ̱,tense,41,grinding,tsʰɿ̱33

@@ -1,0 +1,218 @@
+---
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gujarati}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette uses the [`voicequality`
+package](https://github.com/scjs/ucla-voice-quality) to replicate two of the
+figures in this paper:
+
+> Khan, S. (2012). The phonetics of contrastive phonation in Gujarati. _Journal
+of Phonetics_, 40(6), 780–795. https://doi.org/10.1016/j.wocn.2012.07.001
+
+# Setup
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+First, load the `tidyverse` packages and the data from the `voicequality`
+package.
+
+```{r, message = FALSE}
+library("tidyverse")
+
+data("acoustics", package = "voicequality")
+data("egg", package = "voicequality")
+```
+
+For the Gujarati part of the [UCLA Voice Quality
+Project](http://www.phonetics.ucla.edu/voiceproject/voice.html), Sameer Khan
+recorded ten speakers producing a list of words. There is one Gujarati-language
+audio file per speaker for each target word. Each file has several repetitions
+of a sentence that includes the word. One target vowel was extracted from each
+repetition, and acoustic and EGG measurements for all of the vowel tokens across
+all of the speakers and words were collected in the `acoustics` and `egg`
+tables.
+
+Subset the Gujarati data from the `acoustics` table and join it with the `egg`
+table.
+
+```{r, message = FALSE}
+gujarati <- filter(acoustics, language == "Gujarati") %>%
+  left_join(egg)
+```
+
+List all of the columns in the data. To read the documentation for these
+columns, use `help("acoustics", package = "voicequality")` and `help("egg",
+package = "voicequality")`.
+
+```{r}
+names(gujarati)
+```
+
+Show a few of the columns.
+
+```{r}
+select(gujarati, speaker_id, filename, segment_start, timepoint, CQ_H, H1H2c) %>%
+  as_tibble()
+```
+
+Each vowel token can be uniquely identified by its combination of `filename` and
+`segment_start` values. Each vowel token was divided into nine equal windows of
+time. This table has a row of measurements for each timepoint, so it includes
+nine rows per vowel token. Each row of measurements can be uniquely identified
+by its combination of `filename`, `segment_start`, and `timepoint` values.
+
+Each Gujarati word has a file number assigned to it. The last two digits in each
+filename give the file number for the word that was recorded in that file.
+
+Extract the file numbers from each filename into a separate column.
+
+```{r}
+gujarati <- extract(gujarati,
+  filename, "file_number", "^.*(\\d{2})_Audio$", remove = FALSE
+)
+```
+
+Khan (2012) used a subset of the Gujarati data in the `voicequality` package.
+The appendix has a list of the words that were used for the paper. The file
+numbers for those words in the `gujarati_word_list` table are:
+
+```{r}
+khan_2012_stimuli <- tibble(
+  file_number = c(
+    "01", "03", "06", "08", "09", "11", "12", "13", "30", "31", "32", "33",
+    "34", "35", "38", "39", "40", "41", "46", "47", "48", "49", "56", "57",
+    "59", "60"
+  ),
+  vowel_group = c(
+    "a", "a", "a", "a", "a", "a", "a", "a", "e", "e", "e", "e",
+    "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "o", "o",
+    "o", "o"
+  )
+)
+```
+
+Join the complete Gujarati data with the list of file numbers to get the subset
+used in Khan (2012).
+
+```{r, message = FALSE}
+khan_2012 <- inner_join(gujarati, khan_2012_stimuli)
+```
+
+Reorder the levels of the `phonation` variable so that they will be in the
+correct order for the graph.
+
+```{r}
+khan_2012 <- mutate(khan_2012,
+    phonation = fct_relevel(phonation, c("Modal", "Breathy"))
+)
+```
+
+# Timecourse of contact quotient measure (Figure 10)
+
+The left panel of Figure 10 in Khan (2012) compares the timecourses of the
+contact quotient for modal versus breathy vowels.
+
+The `voicequality` data has measurements at nine timepoints within each vowel
+token. This figure plots the mean and standard error of per-speaker averages for
+the two phonation types at each timepoint. To recreate the figure, first
+calculate the average contact quotient for each phonation type, for each
+speaker. Speakers are uniquely identified by the `speaker_id` column.
+
+```{r}
+mean_cq <- khan_2012 %>%
+  group_by(speaker_id, timepoint, phonation) %>%
+  summarize(CQ_H = mean(CQ_H, na.rm = TRUE)) %>%
+  ungroup()
+
+mean_cq
+```
+
+Next, plot the means and standard errors. `ggplot2` can calculate these itself
+before plotting by using the `summary` stat with the appropriate functions.
+
+```{r}
+ggplot(mean_cq, aes(timepoint, CQ_H, shape = phonation, linetype = phonation)) +
+  geom_point(stat = "summary", fun.y = mean) +
+  geom_line(stat = "summary", fun.y = mean) +
+  geom_errorbar(stat = "summary", fun.data = mean_se, width = 0.1) +
+  scale_linetype_manual(values = c("Modal" = "solid", "Breathy" = "longdash")) +
+  scale_x_continuous(breaks = seq(1, 9)) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+The results look very close to the left panel of the published Figure 10, except
+that all of the values are shifted up by about 0.05.
+
+# Average spectral tilt measures (Figure 4)
+
+Figure 4 in Khan (2012) shows the average values of four spectral tilt measures
+for modal versus breathy vowels in each of the three vowel groups.
+
+To recreate this figure, first calculate the average spectral tilt for each
+phonetic category for each speaker. There are six phonetic categories, with one
+category for each combination of `phonation` (`Modal` or `Breathy`) and
+`vowel_group` (`a`, `e`, or `o`). Speakers are uniquely identified by the
+`speaker_id` column. Note that this calculation averages over all nine
+timepoints in each vowel token.
+
+```{r}
+mean_spectral_tilt <- khan_2012 %>%
+  group_by(speaker_id, vowel_group, phonation) %>%
+  summarize(
+    H1H2c = mean(H1H2c, na.rm = TRUE),
+    H2H4c = mean(H2H4c, na.rm = TRUE),
+    H1A1c = mean(H1A1c, na.rm = TRUE),
+    H1A3c = mean(H1A3c, na.rm = TRUE)
+  )
+
+mean_spectral_tilt
+```
+
+One way to make a single four-panel plot is to `gather()` the variables to be
+plotted, then plot each one in a separate facet.
+
+```{r}
+mean_spectral_tilt <- mean_spectral_tilt %>%
+  gather(measure, measurement, H1H2c, H2H4c, H1A1c, H1A3c) %>%
+  mutate(measure = fct_relevel(measure, c("H1H2c", "H2H4c", "H1A1c", "H1A3c")))
+```
+
+```{r, fig.height = 6, fig.width = 6}
+ggplot(
+  data = mean_spectral_tilt,
+  mapping = aes(
+    x = vowel_group,
+    y = measurement,
+    fill = phonation
+    )
+  ) +
+  geom_bar(
+    stat = "summary",
+    fun.y = mean,
+    position = position_dodge(0.9)
+  ) +
+  geom_errorbar(
+    stat = "summary",
+    fun.data = mean_se,
+    position = position_dodge(0.9),
+    width = 0.1
+  ) +
+  facet_wrap(~measure, scales = "free") +
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),
+    legend.position = "bottom"
+  )
+```
+
+The resulting values look similar to the published Figure 4.
